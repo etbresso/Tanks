@@ -15,7 +15,7 @@ public class TankHealth : MonoBehaviour
     private ParticleSystem m_ExplosionParticles;        // The particle system the will play when the tank is destroyed.
     private float m_CurrentHealth;                      // How much health the tank currently has.
     private bool m_Dead;                                // Has the tank been reduced beyond zero health yet?
-
+    private float invulnerabilite;               //durée invulnérabilité debut
 
     private void Awake()
     {
@@ -34,6 +34,7 @@ public class TankHealth : MonoBehaviour
     {
         // When the tank is enabled, reset the tank's health and whether or not it's dead.
         m_CurrentHealth = m_StartingHealth;
+        invulnerabilite = 7f;
         m_Dead = false;
 
         // Update the health slider's value and color.
@@ -41,18 +42,30 @@ public class TankHealth : MonoBehaviour
     }
 
 
-    public void TakeDamage(float amount)
+    public void Update()
     {
-        // Reduce current health by the amount of damage done.
-        m_CurrentHealth -= amount;
+        invulnerabilite -= Time.deltaTime;
+    }
 
-        // Change the UI elements appropriately.
-        SetHealthUI();
 
-        // If the current health is at or below zero and it has not yet been registered, call OnDeath.
-        if (m_CurrentHealth <= 0f && !m_Dead)
+    public void TakeDamage(float amount, bool typeMine) // type = true -> mine
+    {
+        if (invulnerabilite >= 0 && typeMine)
         {
-            OnDeath();
+        }
+        else
+        { 
+            // Reduce current health by the amount of damage done.
+            m_CurrentHealth -= amount;
+
+            // Change the UI elements appropriately.
+            SetHealthUI();
+
+            // If the current health is at or below zero and it has not yet been registered, call OnDeath.
+            if (m_CurrentHealth <= 0f && !m_Dead)
+            {
+                OnDeath();
+            }
         }
     }
 

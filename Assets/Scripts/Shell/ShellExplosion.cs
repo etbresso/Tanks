@@ -47,7 +47,7 @@ public class ShellExplosion : MonoBehaviour
             float damage = CalculateDamage(targetRigidbody.position);
 
             // Deal this damage to the tank.
-            targetHealth.TakeDamage(damage);
+            targetHealth.TakeDamage(damage,false);
         }
 
         // Unparent the particles from the shell.

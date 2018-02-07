@@ -13,14 +13,18 @@ public class TankShooting : MonoBehaviour
     public float m_MinLaunchForce = 15f;        // The force given to the shell if the fire button is not held.
     public float m_MaxLaunchForce = 30f;        // The force given to the shell if the fire button is held for the max charge time.
     public float m_MaxChargeTime = 0.75f;       // How long the shell can charge for before it is fired at max force.
-
+    public Rigidbody m_Mine;                   // Prefab of the mine.
+    public Transform m_FireMineTransform;           // A child of the tank where the shells are spawned.
 
     private string m_FireButton;                // The input axis that is used for launching shells.
+    private string m_FireMineButton;            // The input axis that is used for putting Mine.
     private float m_CurrentLaunchForce;         // The force that will be given to the shell when the fire button is released.
     private float m_ChargeSpeed;                // How fast the launch force increases, based on the max charge time.
     private bool m_Fired;                       // Whether or not the shell has been launched with this button press.
     private float m_FireTime = 0f;              // Permet de sasvoir s'il peut tirer
     private float m_FireRate = 0.30f;           // Tire tous les X secondes
+    private float m_MineTime = 0f;              // Permet de sasvoir s'il peut tirer
+    private float m_MineRate = 1f;           // Tire tous les X secondes
 
 
     private void OnEnable()
@@ -35,6 +39,7 @@ public class TankShooting : MonoBehaviour
     {
         // The fire axis is based on the player number.
         m_FireButton = "Fire" + m_PlayerNumber;
+        m_FireMineButton = "FireMine" + m_PlayerNumber;
 
         // The rate that the launch force charges up is the range of possible forces by the max charge time.
         m_ChargeSpeed = (m_MaxLaunchForce - m_MinLaunchForce) / m_MaxChargeTime;
@@ -44,6 +49,7 @@ public class TankShooting : MonoBehaviour
     private void Update()
     {
         m_FireTime -= Time.deltaTime;
+        m_MineTime -= Time.deltaTime;
 
         // The slider should have a default value of the minimum launch force.
         m_AimSlider.value = m_MinLaunchForce;
@@ -81,6 +87,11 @@ public class TankShooting : MonoBehaviour
             Fire();
             m_FireTime = m_FireRate;
         }
+        else if (Input.GetButtonDown(m_FireMineButton) && m_MineTime <= 0)
+        {
+            PutMine();
+            m_MineTime = m_MineRate;
+        }
     }
 
 
@@ -102,5 +113,15 @@ public class TankShooting : MonoBehaviour
 
         // Reset the launch force.  This is a precaution in case of missing button events.
         m_CurrentLaunchForce = m_MinLaunchForce;
+    }
+
+    private void PutMine()
+    {
+        // Set the fired flag so only Fire is only called once.
+        m_Fired = true;
+
+        // Create an instance of the shell and store a reference to it's rigidbody.
+        Rigidbody mineInstance =
+            Instantiate(m_Mine, m_FireMineTransform.position, m_FireMineTransform.rotation) as Rigidbody;
     }
 }

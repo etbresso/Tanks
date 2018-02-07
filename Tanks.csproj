@@ -342,6 +342,7 @@
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
     <Compile Include="Assets\Scripts\Managers\TankLobbyHook.cs" />
     <Compile Include="Assets\Scripts\Managers\TankManager.cs" />
+    <Compile Include="Assets\Scripts\Mine\Mine.cs" />
     <Compile Include="Assets\Scripts\Selection\InfoSelection.cs" />
     <Compile Include="Assets\Scripts\Shell\ShellExplosion.cs" />
     <Compile Include="Assets\Scripts\Tank\TankHealth.cs" />

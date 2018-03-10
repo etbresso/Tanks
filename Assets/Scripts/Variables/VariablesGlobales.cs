@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class VariablesGlobales : MonoBehaviour {
 
@@ -9,6 +10,7 @@ public class VariablesGlobales : MonoBehaviour {
     public Color[] couleurTab;
     public int[] commandeTab;
     public bool[] joueTab;
+    public int choixCarte;
 
     public VariablesGlobales()
     {

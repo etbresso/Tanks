@@ -25,6 +25,8 @@ public class InfoSelection : MonoBehaviour {
     public GameObject bouton3Supp;
     public GameObject bouton4;
 
+    public string[] tabCarte = { "LevelDesert", "LevelDesert2" };
+
     public void Start()
     {
         try
@@ -82,6 +84,8 @@ public class InfoSelection : MonoBehaviour {
         vg.setInfoTanks(2, nomInputField[2].text, couleurButton[2].GetComponent<Image>().color, controleDropdown[2].value, joue[2]); //Joueur3
         vg.setInfoTanks(3, nomInputField[3].text, couleurButton[3].GetComponent<Image>().color, controleDropdown[3].value, joue[3]); //Joueur4
 
+        vg.choixCarte = carteDropdown.value;
+
         SceneManager.LoadScene(choixCarte(), LoadSceneMode.Single);
     }
 
@@ -91,7 +95,16 @@ public class InfoSelection : MonoBehaviour {
 
         if (carteDropdown.value == 0)
         {
-            carte = "LevelDesert";
+            int nbAlea = UnityEngine.Random.Range(0, tabCarte.Length);
+            carte = tabCarte[nbAlea];
+        }
+        else if (carteDropdown.value == 1)
+        {
+            carte = tabCarte[0];
+        }
+        if (carteDropdown.value == 2)
+        {
+            carte = tabCarte[1];
         }
         return carte;
     }

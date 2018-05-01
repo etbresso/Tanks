@@ -32,7 +32,31 @@ public class Mine : MonoBehaviour
     {
         if (m_tpsInvulnerable<=0)
         {
-            Explose();
+            // Collect all the colliders in a sphere from the shell's current position to a radius of the explosion radius.
+            Collider[] colliders = Physics.OverlapSphere(transform.position, m_ExplosionRadius, m_TankMask);
+
+            // Go through all the colliders...
+            for (int i = 0; i < colliders.Length; i++)
+            {
+                // ... and find their rigidbody.
+                Rigidbody targetRigidbody = colliders[i].GetComponent<Rigidbody>();
+
+                // If they don't have a rigidbody, go on to the next collider.
+                if (!targetRigidbody)
+                    continue;
+
+                // Find the TankHealth script associated with the rigidbody.
+                TankHealth targetHealth = targetRigidbody.GetComponent<TankHealth>();
+
+                // If there is no TankHealth script attached to the gameobject, go on to the next collider.
+                //si ce n'est pas un tank 
+                if (!targetHealth)
+                    continue;
+                
+                //sinon
+                Explose();
+            }
+            
         }
     }
 

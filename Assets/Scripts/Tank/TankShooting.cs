@@ -24,7 +24,7 @@ public class TankShooting : MonoBehaviour
     private float m_FireTime = 0f;              // Permet de sasvoir s'il peut tirer
     private float m_FireRate = 0.30f;           // Tire tous les X secondes
     private float m_MineTime = 0f;              // Permet de sasvoir s'il peut tirer
-    private float m_MineRate = 1f;           // Tire tous les X secondes
+    private float m_MineRate = 3f;           // Tire tous les X secondes
 
 
     private void OnEnable()
